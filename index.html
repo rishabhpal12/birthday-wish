@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Question</title>
+    <style>
+        :root {
+            --bg: #fff4f8;
+            --card: #ffffff;
+            --text: #6f2e6e;
+            --accent: #d55ab8;
+            --accent-soft: #ffdeeb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100dvh;
+            display: grid;
+            place-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at top left, #ffe7f1, transparent 30%),
+                        linear-gradient(180deg, #fff4f8 0%, #ffe6f0 100%);
+            color: var(--text);
+            padding: 1rem;
+        }
+
+        .card {
+            width: min(100%, 520px);
+            background: var(--card);
+            border-radius: 28px;
+            padding: 1.6rem;
+            box-shadow: 0 24px 60px rgba(111, 46, 110, 0.14);
+            text-align: center;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: radial-gradient(circle at top left, rgba(255, 168, 230, 0.24), transparent 38%);
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .emoji {
+            font-size: 2.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            letter-spacing: 0.02em;
+        }
+
+        p {
+            margin: 0.85rem 0 1.25rem;
+            line-height: 1.6;
+            color: #8f5c88;
+        }
+
+        .question-label {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #8b3f75;
+        }
+
+        .button-grid {
+            display: grid;
+            gap: 0.85rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin: 0.9rem 0 1.2rem;
+        }
+
+        .button-grid .btn {
+            width: 100%;
+            padding: 1rem 0.85rem;
+            border-radius: 16px;
+            border: 1px solid transparent;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #f07bbf 0%, #ff9ad8 100%);
+            cursor: pointer;
+            transition: transform 180ms ease, opacity 180ms ease, background 180ms ease;
+        }
+
+        .button-grid .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .button-grid .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .button-grid .btn.raj {
+            background: linear-gradient(135deg, #d75cc3 0%, #ff7acc 100%);
+        }
+
+        .button-grid .btn.alt {
+            background: linear-gradient(135deg, #ffb3a9 0%, #ffd47c 100%);
+        }
+
+        .countdown {
+            font-size: 0.98rem;
+            color: #905584;
+            margin-top: 0.6rem;
+            font-weight: 600;
+        }
+
+        .note {
+            margin-top: 1rem;
+            color: #aa7aa5;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="content">
+            <div class="emoji">🎉🤔</div>
+            <h1>Quick question before the surprise</h1>
+            <p class="question-label">Who is the most intelligent person you met in your life?</p>
+            <div class="button-grid">
+                <button class="btn raj" id="optionRaj" disabled>Raj</button>
+                <button class="btn alt" id="optionYati" disabled>Yati</button>
+                <button class="btn alt" id="optionYou" disabled>You</button>
+                <button class="btn alt" id="optionDheer" disabled>Dheer Dadda</button>
+            </div>
+            <div class="countdown">Time left: <span id="countdown">20</span>s</div>
+            <div class="note">Wait for the timer to finish, then pick one of the options to continue.</div>
+        </div>
+    </div>
+
+    <script>
+        const countdownEl = document.getElementById('countdown');
+        const optionButtons = [
+            document.getElementById('optionRaj'),
+            document.getElementById('optionYati'),
+            document.getElementById('optionYou'),
+            document.getElementById('optionDheer')
+        ];
+        let countdown = 20;
+        let timer = null;
+
+        function enableOptions() {
+            optionButtons.forEach(btn => {
+                btn.disabled = false;
+            });
+        }
+
+        function goNext(choice) {
+            window.location.href = 'galaxy.html';
+        }
+
+        optionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.disabled) return;
+                goNext(button.textContent.trim());
+            });
+        });
+
+        function startTimer() {
+            countdownEl.textContent = countdown;
+            timer = window.setInterval(() => {
+                countdown -= 1;
+                countdownEl.textContent = countdown;
+                if (countdown <= 0) {
+                    window.clearInterval(timer);
+                    enableOptions();
+                }
+            }, 1000);
+        }
+
+        startTimer();
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egg Surprise Game</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="confetti" class="confetti"></div>
+        <h1>Birthday Egg Surprise</h1>
+        <p class="subtitle">Tap the egg and let her birthday photo pop out.</p>
+        <div class="egg-container">
+            <div class="egg" id="egg" aria-label="Breakable egg" role="button" tabindex="0">
+                <div class="crack crack-left"></div>
+                <div class="crack crack-right"></div>
+                <div class="shine"></div>
+            </div>
+            <img id="photo" class="photo hidden" src="guddu.jpg" alt="Her birthday photo">
+            <p id="photoCaption" class="photo-caption hidden">Happy Birthday, Guddu!</p>
+        </div>
+        <button class="button" id="breakButton" type="button">Break the birthday egg</button>
+        <p class="note">Want to try again? <a href="birthday.html">Back to gift page</a></p>
+    </div>
+    <script>
+        const egg = document.getElementById('egg');
+        const photo = document.getElementById('photo');
+        const photoCaption = document.getElementById('photoCaption');
+        const breakButton = document.getElementById('breakButton');
+        const quizCard = document.querySelector('.quiz-card');
+        const confetti = document.getElementById('confetti');
+        let broken = false;
+
+        function createConfettiPiece() {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = `${Math.random() * 100}%`;
+            piece.style.width = `${6 + Math.random() * 8}px`;
+            piece.style.height = `${10 + Math.random() * 14}px`;
+            piece.style.background = ['#ff80bf', '#ffd1a9', '#ffe066', '#8ad3ff', '#b694ff'][Math.floor(Math.random() * 5)];
+            piece.style.setProperty('--drift', `${Math.random() * 140 - 70}px`);
+            piece.style.animationDuration = `${1 + Math.random() * 0.8}s`;
+            piece.style.animationDelay = `${Math.random() * 0.2}s`;
+            confetti.appendChild(piece);
+            piece.addEventListener('animationend', () => piece.remove());
+        }
+
+        function revealSurprise() {
+            if (broken) return;
+            broken = true;
+            egg.classList.add('broken');
+            breakButton.textContent = 'Surprise revealed!';
+            breakButton.disabled = true;
+            for (let i = 0; i < 18; i += 1) createConfettiPiece();
+            setTimeout(() => {
+                photo.classList.remove('hidden');
+                photoCaption.classList.remove('hidden');
+            }, 700);
+            setTimeout(() => {
+                quizCard.classList.add('fade-out');
+            }, 1600);
+            setTimeout(() => {
+                window.location.href = 'birthday-finish.html';
+            }, 2400);
+        }
+
+        breakButton.addEventListener('click', revealSurprise);
+        egg.addEventListener('click', revealSurprise);
+        egg.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                revealSurprise();
+            }
+        });
+    </script>
+</body>
+</html>

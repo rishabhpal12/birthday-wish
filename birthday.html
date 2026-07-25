@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link rel="stylesheet" href="birthday.css">
+</head>
+<body>
+    <div class="card">
+        <div class="balloons">
+            <span>🎈</span>
+            <span>🎉</span>
+            <span>🎂</span>
+        </div>
+        <h1>Happy Birthday, GUDDU!</h1>
+        <p class="subtitle">A special gift made just for you.</p>
+        <div class="message">
+            <p>Dear GUDDU,</p>
+            <p>May your day be full of joy, laughter, and all your favorite things.</p>
+            <p>You're bright, kind, and truly amazing — today is your day to shine.</p>
+        </div>
+        <button class="button" id="giftButton" type="button">Open your birthday surprise</button>
+        <p class="note">Open this page in Live Server and click the button to reveal the birthday surprise.</p>
+        <p class="note"><a href="galaxy.html">Open the Galaxy Birthday experience</a></p>
+    </div>
+    <script>
+        const giftButton = document.getElementById('giftButton');
+
+        giftButton.addEventListener('click', () => {
+            window.location.href = 'birthday-mobile.html';
+        });
+    </script>
+</body>
+</html>

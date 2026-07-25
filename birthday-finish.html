@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Complete</title>
+    <link rel="stylesheet" href="birthday-finish.css">
+</head>
+<body>
+    <div class="finish-card">
+        <div class="confetti-container" id="confetti"></div>
+        <img class="photo" src="guddu.jpg" alt="Her photo">
+        <h1>🎉 Surprise Revealed!</h1>
+        <p class="subtitle">The birthday photo is now visible — enjoy this special surprise.</p>
+        <p class="quiz-result">Thanks for opening the gift. This final slide uses the quiz-style layout.</p>
+        <button class="button" type="button" onclick="window.location.href='birthday.html'">Back to gift page</button>
+    </div>
+    <script>
+        const confettiContainer = document.getElementById('confetti');
+        const colors = ['#ff80bf', '#ffd1a9', '#ffe066', '#8ad3ff', '#b694ff'];
+
+        function createConfettiPiece() {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = `${Math.random() * 100}%`;
+            piece.style.width = `${8 + Math.random() * 6}px`;
+            piece.style.height = `${12 + Math.random() * 10}px`;
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.opacity = String(0.85 + Math.random() * 0.15);
+            piece.style.setProperty('--drift', `${Math.random() * 140 - 70}px`);
+            piece.style.animationDuration = `${1.2 + Math.random() * 0.8}s`;
+            piece.style.animationDelay = `${Math.random() * 0.2}s`;
+            confettiContainer.appendChild(piece);
+            piece.addEventListener('animationend', () => piece.remove());
+        }
+
+        for (let i = 0; i < 24; i += 1) {
+            createConfettiPiece();
+        }
+    </script>
+</body>
+</html>

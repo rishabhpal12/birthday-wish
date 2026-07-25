@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galaxy Birthday</title>
+  <link rel="stylesheet" href="galaxy.css" />
+</head>
+<body>
+  <div class="galaxy-shell">
+    <div class="stars"></div>
+    <div class="nebula"></div>
+
+    <section class="intro-panel">
+      <div class="intro-copy">
+        <div class="emoji">🚀✨</div>
+        <h1>Galaxy Birthday</h1>
+        <p>Travel through space to reach the Birthday Planet. Tap each planet to read a memory or wish, and finish at the cake planet.</p>
+      </div>
+      <button class="btn" id="launchBtn">Launch to Birthday Planet</button>
+    </section>
+
+    <div class="space" id="space">
+      <div class="shooting-star star1"></div>
+      <div class="shooting-star star2"></div>
+      <div class="shooting-star star3"></div>
+
+      <div class="planet orbit-orbit1" style="--orbit: 16s;">
+        <button class="planet" data-message="Memory 1: Remember our first adventure together under the stars." aria-label="Planet 1">1</button>
+      </div>
+      <div class="planet orbit-orbit2" style="--orbit: 18s;">
+        <button class="planet planet--pink" data-message="Wish 2: May your year be filled with joyful surprises and bright moments." aria-label="Planet 2">2</button>
+      </div>
+      <div class="planet orbit-orbit3" style="--orbit: 14s;">
+        <button class="planet planet--blue" data-message="Memory 3: You always bring laughter and light wherever you go." aria-label="Planet 3">3</button>
+      </div>
+      <div class="planet orbit-orbit4" style="--orbit: 20s;">
+        <button class="planet planet--green" data-message="Wish 4: May every dream orbit closer to your reality this year." aria-label="Planet 4">4</button>
+      </div>
+      <div class="planet orbit-final" style="--orbit: 22s;">
+        <button class="planet planet--cake" data-message="Final planet: Happy Birthday! Here is your cake planet." aria-label="Final planet">🎂</button>
+      </div>
+    </div>
+
+    <aside class="wish-panel" id="wishPanel">
+      <h2>Birthday Planet Log</h2>
+      <p id="wishText">Launch the rocket and visit the planets to discover messages.</p>
+    </aside>
+  </div>
+
+  <script>
+    const launchBtn = document.getElementById('launchBtn');
+    const body = document.body;
+    const wishText = document.getElementById('wishText');
+    const planets = document.querySelectorAll('.planet[data-message]');
+
+    launchBtn.addEventListener('click', () => {
+      body.classList.add('launched');
+      launchBtn.textContent = 'Have fun exploring!';
+      launchBtn.disabled = true;
+    });
+
+    planets.forEach((planet) => {
+      planet.addEventListener('click', () => {
+        const message = planet.dataset.message;
+        wishText.textContent = message;
+        planets.forEach(btn => btn.classList.remove('planet--active'));
+        planet.classList.add('planet--active');
+
+        if (planet.classList.contains('planet--cake')) {
+          window.location.href = 'birthday-mobile.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
